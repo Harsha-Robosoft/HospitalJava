@@ -1,7 +1,6 @@
-import AllFiles.Patient;
+import AllFiles.*;
 class MainFile{
     public static void main(String a[]){
-        System.out.println("hi");
-        new Patient().justPrint();
+        new Hospital().contactHelpDeskForPatientRegistration();
     }
 }
