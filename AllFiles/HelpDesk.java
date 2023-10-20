@@ -3,10 +3,10 @@ import Models.*;
 
 public class HelpDesk {
     
-    private PatientModel[] opdPatientList = new PatientModel[0];
+    private PatientModel opdPatientList[];
     private int opdPatientCount; 
 
-    private PatientModel[] non_OpdPatientList;
+    private PatientModel non_OpdPatientList[];
     private int non_OpdPatientCount; 
 
     public void patientRegistation(){
