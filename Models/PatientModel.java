@@ -26,6 +26,10 @@ public class PatientModel {
         this.admissionType = admissionType;
     }
 
+    public String toString() {
+        return "Patient data: " + firstName + " " + lastName + ", " + age + " " + gender + " " + contectNumber + " " + admissionType ;
+    }
+
 }
 
 class Non_OpdPatientDetail extends PatientModel{
