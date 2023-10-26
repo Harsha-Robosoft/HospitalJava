@@ -11,14 +11,15 @@ public class HelpDesk {
     public void patientRegistation(){
         System.out.println("Patient registration started.++++++++++++++++++++++++++++++++++");
         // Define values for the patient
-        String firstName = "Harsha";
-        String lastName = "M";
+        String id = "ID";
+        String name = "Harsha m";
         int age = 24;
         GenderTypes gender = GenderTypes.Male;
         int contactNum = 1234567890;
-        PatientAdmissionType admissionType = PatientAdmissionType.Non_Opd;
+        PatientAdmissionType admissionType = PatientAdmissionType.Opd;
+        Departments department = Departments.Cardiology;
         // Create a PatientModel object
-        Patient patient01 = new Patient(firstName, lastName, age, gender, contactNum, admissionType);
+        Patient patient01 = new Patient(id, name, age, gender, contactNum, admissionType, department);
         switch (admissionType){
             case Opd:
                 opdPatientList.add(patient01);
