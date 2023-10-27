@@ -1,6 +1,7 @@
 package AllFiles;
 import java.util.ArrayList;
 import java.util.HashMap;
+import AllFiles.Patient;
 import AllFiles.AllDepartments.*;
 
 public class HelpDesk {
@@ -34,16 +35,16 @@ public class HelpDesk {
 
         switch (department){
             case Cardiology:
-                Patient patient = new CardiologyDep().startPatientCheckup(patient01);
+               new CardiologyDep().startPatientCheckup(patient01);
                 break;
             case Neurology:
-                Patient patient1 = new NeurologyDep().startPatientCheckup(patient01);
+                new NeurologyDep().startPatientCheckup(patient01);
                 break;
             case Orthopedics:
-                Patient patien2 = new OrthopedicDep().startPatientCheckup(patient01);
+                new OrthopedicDep().startPatientCheckup(patient01);
                 break;
             case Pediatrics:
-                Patient patient3 = new PediatricsDep().startPatientCheckup(patient01);
+                new PediatricsDep().startPatientCheckup(patient01);
                 break;
         }
 

@@ -1,5 +1,6 @@
 package AllFiles;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 enum GenderTypes{
@@ -26,17 +27,19 @@ public class Patient {
     private int numberOfdayToStay;
     private int policyNnumber;
     private int clamAmmount;
-    private HashMap<String, PatientCheckUpDetails[]> checkUpDetails = new HashMap<>();
+    private HashMap<Departments, ArrayList<PatientCheckUpDetails>> checkUpDetails = new HashMap<>();
 
 
-    public HashMap<String, PatientCheckUpDetails[]> getCheckUpDetails() {
+
+    
+    public HashMap<Departments, ArrayList<PatientCheckUpDetails>> getCheckUpDetails() {
         return checkUpDetails;
     }
-    public void setCheckUpDetails(HashMap<String, PatientCheckUpDetails[]> checkUpDetails) {
+    public void setCheckUpDetails(HashMap<Departments, ArrayList<PatientCheckUpDetails>> checkUpDetails) {
         this.checkUpDetails = checkUpDetails;
     }
 
-    
+
     public String getPatientID() {return patientID; }
     public String getFullName() {return fullName;}
     public int getAge() {return age;}
@@ -80,33 +83,5 @@ public class Patient {
         System.out.println("Patient Came to hospital.===========");
         new Hospital().contactHelpDeskForPatientRegistration();
     }
-
-}
-
-
-class PatientCheckUpDetails{
-    private Patient patientDetails = null;
-    private Departments departmentVisited;
-    private String prescription;
-    private int consultAmount;
-    private boolean paidConsultingAmmount = false;
-
-    public PatientCheckUpDetails(){
-
-    }
-
-    public PatientCheckUpDetails(Departments departmentVisited, String prescription, int consultAmount){
-        this.departmentVisited = departmentVisited;
-        this.prescription = prescription;
-        this.consultAmount = consultAmount;
-    }
-
-    public Departments getDepartmentVisited() {return departmentVisited;}
-    public String getPrescription() {return prescription;}
-    public int getConsultAmount() {return consultAmount;}
-    public boolean isPaidConsultingAmmount() {return paidConsultingAmmount;}
-    public void setPaidConsultingAmmount(boolean paidConsultingAmmount) {this.paidConsultingAmmount = paidConsultingAmmount;}
-    
-    
 
 }
