@@ -10,7 +10,7 @@ enum PatientAdmissionType{
 }
 
 enum Departments{
-    Orthipedics, Cardiology, Neurology, Pediatrics;
+    Orthopedics, Cardiology, Neurology, Pediatrics;
 }
 
 public class Patient {
@@ -25,6 +25,18 @@ public class Patient {
     private int numberOfdayToStay;
     private int policyNnumber;
     private int clamAmmount;
+
+
+    public String getPatientID() {return patientID; }
+    public String getFullName() {return fullName;}
+    public int getAge() {return age;}
+    public GenderTypes getGender() {return gender;}
+    public int getContectNumber() {return contectNumber;}
+    public PatientAdmissionType getAdmissionType() {return admissionType;}
+    public Departments getDepartmentToVisit() {return departmentToVisit;}
+    public int getNumberOfdayToStay() {return numberOfdayToStay;}
+    public int getPolicyNnumber() {return policyNnumber;}
+    public int getClamAmmount() {return clamAmmount;}
 
 
     public Patient(){

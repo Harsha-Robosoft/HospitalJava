@@ -30,12 +30,10 @@ public class HelpDesk {
                 System.out.println("added to non_opd patient array");
             break;
         }
-        // System.out.println(patient01.fullName);
         System.out.println("opd patient cout is: " + opdPatientList.size());
         System.out.println("Non_Opd patient cout is: " + non_OpdPatientList.size());
         System.out.println("Patient registration completed. and data stored.++++++++++++++++++++++++++++++++");
         System.out.println("");
-        // System.out.println("Asking for Department to Visit.");
     }
     
 }
