@@ -15,33 +15,43 @@ enum Departments{
 
 public class Patient {
 
-
+    private String patientID;
     private String fullName;
-    private String firstName;
-    private String lastName;
     private int age;
     private GenderTypes gender;
     private int contectNumber;
     private PatientAdmissionType admissionType;
-    private Departments doctor_departmentToVisit = null; 
+    private Departments departmentToVisit; 
+    private int numberOfdayToStay;
+    private int policyNnumber;
+    private int clamAmmount;
 
 
     public Patient(){
 
     }
     
-    public Patient(String firstName,String lastName,int age,GenderTypes gender, int contactNum,PatientAdmissionType admissionType){
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Patient(String patientId,String name,int age,GenderTypes gender, int contactNum,PatientAdmissionType admissionType,Departments departmentToVisit){
+        this.patientID = patientId;
+        this.fullName = name;
         this.age = age;
         this.gender = gender;
         this.contectNumber = contactNum;
         this.admissionType = admissionType;
-        this.fullName = firstName + " " + lastName;
+        this.departmentToVisit = departmentToVisit;
     }
 
-    public String toString() {
-        return "Patient data: " + firstName + " " + lastName + ", " + age + " " + gender + " " + contectNumber + " " + admissionType ;
+    public Patient(String patientId,String name,int age,GenderTypes gender, int contactNum,PatientAdmissionType admissionType,Departments departmentToVisit, int numberOfDaysToStay, int policyNum, int clamAmount){
+        this.patientID = patientId;
+        this.fullName = name;
+        this.age = age;
+        this.gender = gender;
+        this.contectNumber = contactNum;
+        this.admissionType = admissionType;
+        this.departmentToVisit = departmentToVisit;
+        this.numberOfdayToStay = numberOfDaysToStay;
+        this.policyNnumber = policyNum;
+        this.clamAmmount = clamAmount;
     }
 
     public void patientCameToHospital(){
@@ -50,22 +60,4 @@ public class Patient {
     }
     
 
-}
-
-
-class Non_OpdPatient extends Patient{
-    private PatientInsuranceDetail insurencDetail;
-    private int numberOfdayToStay;
-    private PatientInsuranceDetail insuranceDetail;
-    public Non_OpdPatient(String firstName, String lastName, int age, GenderTypes gender, int contactNum,
-            PatientAdmissionType admissionType, PatientInsuranceDetail insuranceDetail, int numberOfdayToStay) {
-        super(firstName, lastName, age, gender, contactNum, admissionType);
-        this.insurencDetail = insuranceDetail;
-        this.numberOfdayToStay = numberOfdayToStay;
-    }
-}
-
-class PatientInsuranceDetail{
-    private int insurancePolicyNnumber;
-    private int clamAmmount;
 }
