@@ -11,9 +11,6 @@ enum PatientAdmissionType{
     Opd,Non_Opd;
 }
 
-enum Departments{
-    Orthopedics, Cardiology, Neurology, Pediatrics;
-}
 
 public class Patient {
 

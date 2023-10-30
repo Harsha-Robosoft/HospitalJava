@@ -1,6 +1,3 @@
-import java.util.Dictionary;
-import java.util.HashMap;
-
 import AllFiles.*;
 
 class MainFile{

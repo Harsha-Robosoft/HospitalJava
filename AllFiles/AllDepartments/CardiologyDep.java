@@ -2,12 +2,10 @@ package AllFiles.AllDepartments;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import AllFiles.Departments;
 import AllFiles.Patient;
 import AllFiles.PatientCheckUpDetails;
 
-// enum Departments{
-//     Orthopedics, Cardiology, Neurology, Pediatrics;
-// }
 
 public class CardiologyDep {
 
@@ -21,10 +19,8 @@ public class CardiologyDep {
         ArrayList<PatientCheckUpDetails> testArray = new ArrayList<>();
         testArray.add(detailsIs);
         dataa.put(patientIs.getDepartmentToVisit(), testArray);
-
         patientIs.setCheckUpDetails(dataa);
-
-        return patientIs; // Return the patientIs object
+        return patientIs;
     }
 
 }
