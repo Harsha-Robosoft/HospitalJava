@@ -48,6 +48,10 @@ public class Patient {
     public int getPolicyNnumber() {return policyNnumber;}
     public int getClamAmmount() {return clamAmmount;}
 
+    @Override
+    public String toString() {
+        return "ID: "+ patientID + "\n" + "name: " + fullName + "\n" + "age: " + age + "\n" + "gender: " + gender + "\n" + "contact num: " + contectNumber + "\n" + "admission type: " + admissionType + "\n" +  "department to visit: " + departmentToVisit + "\n" + "number of days to stay: " + numberOfdayToStay + "\n" + "policy number: " + policyNnumber + "\n" + "clam amount: " + clamAmmount + "\n" + "checkup details: " + checkUpDetails ;
+    }
 
     public Patient(){
 
@@ -77,7 +81,8 @@ public class Patient {
     }
 
     public void patientCameToHospital(){
-        System.out.println("Patient Came to hospital.===========");
+        System.out.println("");
+        System.out.println(":- Patient Came to hospital.");
         new Hospital().contactHelpDeskForPatientRegistration();
     }
 

@@ -9,9 +9,8 @@ import AllFiles.PatientCheckUpDetails;
 public class OrthopedicDep {
     
     public Patient startPatientCheckup(Patient patientIs){
-        System.out.println("hi01");
         System.out.println(patientIs.getAdmissionType());
-        String prescription = "all is well";
+        String prescription = "all is well OrthopedicDep";
         int consultAmount = 100;
         PatientCheckUpDetails detailsIs = new PatientCheckUpDetails(patientIs.getDepartmentToVisit(), prescription, consultAmount);
         HashMap<Departments, ArrayList<PatientCheckUpDetails>> dataa = new HashMap<>();
