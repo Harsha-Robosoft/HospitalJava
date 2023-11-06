@@ -3,13 +3,7 @@ package AllFiles;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-enum GenderTypes{
-    Male,Female,Other;
-}
-
-enum PatientAdmissionType{
-    Opd,Non_Opd;
-}
+import AllFiles.AllEnums.*;
 
 
 public class Patient {
@@ -48,6 +42,11 @@ public class Patient {
     public int getPolicyNnumber() {return policyNnumber;}
     public int getClamAmmount() {return clamAmmount;}
 
+    
+
+    public void setPatientID(String patientID) {
+        this.patientID = patientID;
+    }
     @Override
     public String toString() {
         return "ID: "+ patientID + "\n" + "name: " + fullName + "\n" + "age: " + age + "\n" + "gender: " + gender + "\n" + "contact num: " + contectNumber + "\n" + "admission type: " + admissionType + "\n" +  "department to visit: " + departmentToVisit + "\n" + "number of days to stay: " + numberOfdayToStay + "\n" + "policy number: " + policyNnumber + "\n" + "clam amount: " + clamAmmount + "\n" + "checkup details: " + checkUpDetails ;

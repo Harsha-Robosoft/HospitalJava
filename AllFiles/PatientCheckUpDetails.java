@@ -1,5 +1,9 @@
 package AllFiles;
 
+import AllFiles.AllEnums.Departments;
+
+
+
 public class PatientCheckUpDetails {
     private Departments departmentVisited;
     private String prescription;

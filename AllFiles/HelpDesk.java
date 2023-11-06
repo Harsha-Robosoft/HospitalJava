@@ -1,6 +1,10 @@
 package AllFiles;
 import java.util.ArrayList;
 import AllFiles.AllDepartments.*;
+import AllFiles.AllEnums.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class HelpDesk {
     
@@ -14,71 +18,142 @@ public class HelpDesk {
     public void patientRegistation(){
         System.out.println(":- Patient registration started.");
         // Define values for the patient
-        String id = "";
-        String name = "Harsha m";
-        int age = 24;
-        GenderTypes gender = GenderTypes.Male;
-        int contactNum = 1234567890;
-        PatientAdmissionType admissionType = PatientAdmissionType.Opd;
-        switch (admissionType) {
+        Patient opdPatient01 = new Patient("", "Harsha", 24, GenderTypes.Male, 1234567890, PatientAdmissionType.Opd, Departments.Cardiology);
+        Patient opdPatient02 = new Patient("", "Vini", 24, GenderTypes.Male, 1234567800, PatientAdmissionType.Opd, Departments.Neurology);
+        Patient opdPatient03 = new Patient("", "Chiru", 24, GenderTypes.Male, 1234567000, PatientAdmissionType.Opd, Departments.Orthopedics);
+        Patient nonOpdPatient01 = new Patient("", "Jeegu", 24, GenderTypes.Male, 1234567890, PatientAdmissionType.Non_Opd, Departments.Neurology, 5, 5555, 123);
+        Patient nonOpdPatient02 = new Patient("", "Prajju", 24, GenderTypes.Male, 1234567800, PatientAdmissionType.Non_Opd, Departments.Cardiology, 2, 2323, 1);
+        
+        savepatientDataToAccordingToThereAdmissionType(opdPatient01);
+        savepatientDataToAccordingToThereAdmissionType(opdPatient02);
+        savepatientDataToAccordingToThereAdmissionType(opdPatient03);
+        savepatientDataToAccordingToThereAdmissionType(nonOpdPatient01);
+        savepatientDataToAccordingToThereAdmissionType(nonOpdPatient02);
+
+        if (opdPatientList.size() != 0){
+            for (Patient patient : opdPatientList) {
+                generateIDForPatient(patient);
+                System.out.println(":- Patient registration completed and data stored.++++++++");
+                System.out.println("");
+                System.out.println(":- Sending patient to respective department.");
+                sendPatientToRespectiveDepartment(patient, patient.getDepartmentToVisit());
+            }
+        }else{
+            System.out.println("Opd patient list is empty");
+        }
+        
+        if (non_OpdPatientList.size() != 0){
+            for (Patient patient : non_OpdPatientList) {
+                generateIDForPatient(patient);
+                System.out.println(":- Patient registration completed and data stored.++++++++");
+                System.out.println("");
+                System.out.println(":- Sending patient to respective department.");
+                sendPatientToRespectiveDepartment(patient, patient.getDepartmentToVisit());
+            }
+        }else{
+            System.out.println("Non-Opd patient list is empty");
+        }
+        
+    }
+
+    private void savepatientDataToAccordingToThereAdmissionType(Patient patient){
+        switch (patient.getAdmissionType()){
+            case Opd:
+                opdPatientList.add(patient);
+            break;
+            case Non_Opd:
+                if (checkForRoom_BedAvelableForNonOpdPatient(patient.getNumberOfdayToStay())){
+                    // Room_Bed is avilable and admit the patient and continue with process
+                    non_OpdPatientList.add(patient);
+                }else{
+                    // Room_Bed is not avilable and handle the edge case
+                    System.out.println("Sorry bro please come next day");
+                }
+            break;
+        }
+    }
+
+    private boolean checkForRoom_BedAvelableForNonOpdPatient(int numberOfdaysRequestedBypatient){
+        return numberOfdaysRequestedBypatient <= 5;
+    }
+
+    private void generateIDForPatient(Patient patint){
+        switch (patint.getAdmissionType()) {
             case Opd:
             opdPatinetIdCount += 1;
-            id = "Opd_ID: " + opdPatinetIdCount;
+            String idIs = "Opd_ID: " + opdPatinetIdCount;
+            patint.setPatientID(idIs);
             break;
             case Non_Opd:
             non_opdPatinetIdCount += 1;
-            id = "Non_Opd_ID: " + non_opdPatinetIdCount;
+            String idIss = "Non_Opd_ID: " + non_opdPatinetIdCount;
+            patint.setPatientID(idIss);
             break;
         }
-        Departments department = Departments.Cardiology;
-        // Create a PatientModel object
-        Patient patient01 = new Patient(id, name, age, gender, contactNum, admissionType, department);
-        switch (admissionType){
-            case Opd:
-                opdPatientList.add(patient01);
-            break;
-            case Non_Opd:
-                non_OpdPatientList.add(patient01);
-            break;
-        }
-        System.out.println(":- Patient registration completed and data stored.++++++++");
-        System.out.println("");
-        System.out.println(":- Sending patient to respective department.");
-        sendPatientToRespectiveDepartment(patient01, department);
     }
     
     private void sendPatientToRespectiveDepartment(Patient patientIs, Departments departmentToSend){
          switch (departmentToSend){
             case Cardiology:
-                System.out.println(":- Sent patient to respective department which is CARDIOLOGY and also sent the patient file.");
+            if (patientIs.getAdmissionType() == PatientAdmissionType.Opd){
+                System.out.println(":- Sent patient to respective OPD department which is CARDIOLOGY and also sent the patient file.");
                 Patient patientObj =  new CardiologyDep().startPatientCheckup(patientIs);
-                Departments checkDepartment = Departments.Cardiology;
                 System.out.println(":- Started the payment process.");
-                completeThePaymentProcess(checkDepartment, patientObj);
+                completeThePaymentProcess(patientIs.getDepartmentToVisit(), patientObj);
+            }else{
+                System.out.println(":- Sent patient to respective NON_OPD department which is CARDIOLOGY and also sent the patient file.");
+                Patient patientObj =  new CardiologyDep().startPatientCheckup(patientIs);
+                System.out.println(":- Started the payment process.");
+                // completeThePaymentProcess(patientIs.getDepartmentToVisit(), patientObj);
+                if (checkForInsurenceStatues(patientIs.getPolicyNnumber())){
+                    // Insurance plicy is valid and proced with clam amount
+
+                        // this if starement is for getting the consult amount
+                    if (patientObj.getCheckUpDetails().containsKey(patientObj.getDepartmentToVisit())){
+                        ArrayList<PatientCheckUpDetails> checkUpDetailsArray = patientObj.getCheckUpDetails().get(patientObj.getDepartmentToVisit());
+                        if (!checkUpDetailsArray.isEmpty()) {
+                            PatientCheckUpDetails lastPatientCheckUpDetails = checkUpDetailsArray.get(checkUpDetailsArray.size() - 1);
+                            int extraTopay = howMuchExtraAmountNeedToPayByPatient(patientIs.getClamAmmount(), lastPatientCheckUpDetails.getConsultAmount());
+                            if (extraTopay == 0 || extraTopay < patientIs.getClamAmmount()){
+                                // Bill amount is covered in the insurence clam amount no need to pay extra and payment is completed
+                                completeThePaymentProcess(patientObj.getDepartmentToVisit(), patientObj);
+                            }else{
+                                // Need to pay extra ammount over insurance clam 
+                                completeThePaymentProcess(patientObj.getDepartmentToVisit(), patientObj);
+                            }
+                        }else{
+                            // patient checkup details array is wmpath handle edge case
+                        }
+                    }else{
+                        // patient details dictionay does not has a key handel edge case
+                    }
+                }else{
+                    // Insurance is not valid handle edge case here
+                }
+            }
+                
             break;
             case Neurology:
-                System.out.println(":- Sent patient to respective department which is NEWUROLOGY and also sent the patient file.");
+                System.out.println(":- Sent patient to respective OPD department which is NEWUROLOGY and also sent the patient file.");
                 Patient patientObj01 = new NeurologyDep().startPatientCheckup(patientIs);
-                Departments checkDepartment01 = Departments.Neurology;
                 System.out.println(":- Started the payment process.");
-                completeThePaymentProcess(checkDepartment01, patientObj01);
+                completeThePaymentProcess(patientIs.getDepartmentToVisit(), patientObj01);
             break;
             case Orthopedics:
-                System.out.println(":- Sent patient to respective department which is ORTHOPEDICS and also sent the patient file.");
+                System.out.println(":- Sent patient to respective OPD department which is ORTHOPEDICS and also sent the patient file.");
                 Patient patientObj02 = new OrthopedicDep().startPatientCheckup(patientIs);
-                Departments checkDepartment02 = Departments.Orthopedics;
                 System.out.println(":- Started the payment process.");
-                completeThePaymentProcess(checkDepartment02, patientObj02);
+                completeThePaymentProcess(patientIs.getDepartmentToVisit(), patientObj02);
             break;
             case Pediatrics:
-                System.out.println(":- Sent patient to respective department which is PEDIATRICS and also sent the patient file.");
+                System.out.println(":- Sent patient to respective OPD department which is PEDIATRICS and also sent the patient file.");
                 Patient patientObj03 = new PediatricsDep().startPatientCheckup(patientIs);
-                Departments checkDepartment03 = Departments.Pediatrics;
                 System.out.println(":- tarted the payment process.");
-                completeThePaymentProcess(checkDepartment03, patientObj03);
+                completeThePaymentProcess(patientIs.getDepartmentToVisit(), patientObj03);
             break;
         }
     }
+
 
     private void completeThePaymentProcess(Departments whichDepartmentVisited,Patient patientObjectFromdepartment){
         if (patientObjectFromdepartment.getCheckUpDetails().containsKey(whichDepartmentVisited)){
@@ -99,13 +174,20 @@ public class HelpDesk {
                 System.out.println(":- payment completed.");
                 System.err.println("////////// " + whichDepartmentVisited + " //////////");
                 System.out.println("");
-
                 System.out.println("----------- Complete patientDetails ------------ \n" + patientObjectFromdepartment);
-
             } else {
                 System.out.println(":- payment not completed.");
                 System.err.println(":- The ArrayList is empty.");
             }
         }
     }
+
+    private boolean checkForInsurenceStatues(int forPolicy){
+        return true;
+    }
+
+    private int howMuchExtraAmountNeedToPayByPatient(int clamAmmount, int TotalBill){
+        return 0;
+    }
+
 }
