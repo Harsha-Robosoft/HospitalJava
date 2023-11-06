@@ -3,9 +3,6 @@ import java.util.ArrayList;
 import AllFiles.AllDepartments.*;
 import AllFiles.AllEnums.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class HelpDesk {
     
     private ArrayList<Patient> opdPatientList = new ArrayList<>();
@@ -33,6 +30,7 @@ public class HelpDesk {
         if (opdPatientList.size() != 0){
             for (Patient patient : opdPatientList) {
                 generateIDForPatient(patient);
+                System.out.println("@@@@@@@@@");
                 System.out.println(":- Patient registration completed and data stored.++++++++");
                 System.out.println("");
                 System.out.println(":- Sending patient to respective department.");
@@ -95,62 +93,75 @@ public class HelpDesk {
     private void sendPatientToRespectiveDepartment(Patient patientIs, Departments departmentToSend){
          switch (departmentToSend){
             case Cardiology:
-            if (patientIs.getAdmissionType() == PatientAdmissionType.Opd){
-                System.out.println(":- Sent patient to respective OPD department which is CARDIOLOGY and also sent the patient file.");
-                Patient patientObj =  new CardiologyDep().startPatientCheckup(patientIs);
-                System.out.println(":- Started the payment process.");
-                completeThePaymentProcess(patientIs.getDepartmentToVisit(), patientObj);
-            }else{
-                System.out.println(":- Sent patient to respective NON_OPD department which is CARDIOLOGY and also sent the patient file.");
-                Patient patientObj =  new CardiologyDep().startPatientCheckup(patientIs);
-                System.out.println(":- Started the payment process.");
-                // completeThePaymentProcess(patientIs.getDepartmentToVisit(), patientObj);
-                if (checkForInsurenceStatues(patientIs.getPolicyNnumber())){
-                    // Insurance plicy is valid and proced with clam amount
-
-                        // this if starement is for getting the consult amount
-                    if (patientObj.getCheckUpDetails().containsKey(patientObj.getDepartmentToVisit())){
-                        ArrayList<PatientCheckUpDetails> checkUpDetailsArray = patientObj.getCheckUpDetails().get(patientObj.getDepartmentToVisit());
-                        if (!checkUpDetailsArray.isEmpty()) {
-                            PatientCheckUpDetails lastPatientCheckUpDetails = checkUpDetailsArray.get(checkUpDetailsArray.size() - 1);
-                            int extraTopay = howMuchExtraAmountNeedToPayByPatient(patientIs.getClamAmmount(), lastPatientCheckUpDetails.getConsultAmount());
-                            if (extraTopay == 0 || extraTopay < patientIs.getClamAmmount()){
-                                // Bill amount is covered in the insurence clam amount no need to pay extra and payment is completed
-                                completeThePaymentProcess(patientObj.getDepartmentToVisit(), patientObj);
-                            }else{
-                                // Need to pay extra ammount over insurance clam 
-                                completeThePaymentProcess(patientObj.getDepartmentToVisit(), patientObj);
-                            }
-                        }else{
-                            // patient checkup details array is wmpath handle edge case
-                        }
-                    }else{
-                        // patient details dictionay does not has a key handel edge case
-                    }
+                if (patientIs.getAdmissionType() == PatientAdmissionType.Opd){
+                    cleanUpFuncOpd(patientIs);
                 }else{
-                    // Insurance is not valid handle edge case here
+                    cleanUpFuncNonOpd(patientIs);
                 }
-            }
                 
             break;
             case Neurology:
-                System.out.println(":- Sent patient to respective OPD department which is NEWUROLOGY and also sent the patient file.");
-                Patient patientObj01 = new NeurologyDep().startPatientCheckup(patientIs);
-                System.out.println(":- Started the payment process.");
-                completeThePaymentProcess(patientIs.getDepartmentToVisit(), patientObj01);
+                if (patientIs.getAdmissionType() == PatientAdmissionType.Opd){
+                    cleanUpFuncOpd(patientIs);
+                }else{
+                    cleanUpFuncNonOpd(patientIs);
+                }
             break;
             case Orthopedics:
-                System.out.println(":- Sent patient to respective OPD department which is ORTHOPEDICS and also sent the patient file.");
-                Patient patientObj02 = new OrthopedicDep().startPatientCheckup(patientIs);
-                System.out.println(":- Started the payment process.");
-                completeThePaymentProcess(patientIs.getDepartmentToVisit(), patientObj02);
+                if (patientIs.getAdmissionType() == PatientAdmissionType.Opd){
+                    cleanUpFuncOpd(patientIs);
+                }else{
+                    cleanUpFuncNonOpd(patientIs);
+                }
             break;
             case Pediatrics:
-                System.out.println(":- Sent patient to respective OPD department which is PEDIATRICS and also sent the patient file.");
-                Patient patientObj03 = new PediatricsDep().startPatientCheckup(patientIs);
-                System.out.println(":- tarted the payment process.");
-                completeThePaymentProcess(patientIs.getDepartmentToVisit(), patientObj03);
+                if (patientIs.getAdmissionType() == PatientAdmissionType.Opd){
+                    cleanUpFuncOpd(patientIs);
+                }else{
+                    cleanUpFuncNonOpd(patientIs);
+                }
             break;
+        }
+    }
+
+    private void cleanUpFuncOpd(Patient patient){
+        System.out.println(":- Sent patient to respective OPD department which is CARDIOLOGY and also sent the patient file.");
+        Patient patientObj =  new CardiologyDep().startPatientCheckup(patient);
+        System.out.println(":- Started the payment process.");
+        completeThePaymentProcess(patient.getDepartmentToVisit(), patientObj);
+    }
+
+    private void cleanUpFuncNonOpd(Patient patient){
+        System.out.println(":- Sent patient to respective NON_OPD department which is CARDIOLOGY and also sent the patient file.");
+        Patient patientObj =  new CardiologyDep().startPatientCheckup(patient);
+        System.out.println(":- Started the payment process.");
+        // completeThePaymentProcess(patientIs.getDepartmentToVisit(), patientObj);
+        if (checkForInsurenceStatues(patient.getPolicyNnumber())){
+            // Insurance plicy is valid and proced with clam amount
+
+            // this if starement is for getting the consult amount
+            if (patientObj.getCheckUpDetails().containsKey(patientObj.getDepartmentToVisit())){
+                ArrayList<PatientCheckUpDetails> checkUpDetailsArray = patientObj.getCheckUpDetails().get(patientObj.getDepartmentToVisit());
+                if (!checkUpDetailsArray.isEmpty()) {
+                    PatientCheckUpDetails lastPatientCheckUpDetails = checkUpDetailsArray.get(checkUpDetailsArray.size() - 1);
+                    int extraTopay = howMuchExtraAmountNeedToPayByPatient(patientObj.getClamAmmount(), lastPatientCheckUpDetails.getConsultAmount());
+                    if (extraTopay == 0 || extraTopay < patientObj.getClamAmmount()){
+                        // Bill amount is covered in the insurence clam amount no need to pay extra and payment is completed
+                        System.out.println(":- Complete amount is covered under insurence so chill brooo.");
+                        completeThePaymentProcess(patientObj.getDepartmentToVisit(), patientObj);
+                    }else{
+                        // Need to pay extra ammount over insurance clam
+                        System.out.println(":- Need to pay a littel extra on top of insurance.");
+                        completeThePaymentProcess(patientObj.getDepartmentToVisit(), patientObj);
+                    }
+                }else{
+                    // patient checkup details array is wmpath handle edge case
+                }
+            }else{
+                // patient details dictionay does not has a key handel edge case
+            }
+        }else{
+            // Insurance is not valid handle edge case here
         }
     }
 
@@ -175,6 +186,7 @@ public class HelpDesk {
                 System.err.println("////////// " + whichDepartmentVisited + " //////////");
                 System.out.println("");
                 System.out.println("----------- Complete patientDetails ------------ \n" + patientObjectFromdepartment);
+                System.out.println("***********************");
             } else {
                 System.out.println(":- payment not completed.");
                 System.err.println(":- The ArrayList is empty.");
@@ -186,8 +198,12 @@ public class HelpDesk {
         return true;
     }
 
-    private int howMuchExtraAmountNeedToPayByPatient(int clamAmmount, int TotalBill){
-        return 0;
+    private int howMuchExtraAmountNeedToPayByPatient(int clamAmmount, int totalBill){
+        if (clamAmmount <= totalBill){
+            return 0;
+        }else{
+            return totalBill - clamAmmount;
+        }
     }
 
 }
