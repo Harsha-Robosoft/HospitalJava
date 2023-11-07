@@ -199,7 +199,7 @@ public class HelpDesk {
     }
 
     private int howMuchExtraAmountNeedToPayByPatient(int clamAmmount, int totalBill){
-        if (clamAmmount <= totalBill){
+        if (totalBill <= clamAmmount){
             return 0;
         }else{
             return totalBill - clamAmmount;

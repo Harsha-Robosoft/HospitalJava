@@ -23,7 +23,7 @@ public class CardiologyDep {
             return patientIs;   
         }else{
             String prescription = "all is well Non_Opd CardiologyDep";
-            int consultAmount = 565656587;
+            int consultAmount = 0;
             PatientCheckUpDetails detailsIs = new PatientCheckUpDetails(patientIs.getDepartmentToVisit(), prescription, consultAmount);
             HashMap<Departments, ArrayList<PatientCheckUpDetails>> dataa = new HashMap<>();
             ArrayList<PatientCheckUpDetails> testArray = new ArrayList<>();
