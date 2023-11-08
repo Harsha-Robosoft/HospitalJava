@@ -17,7 +17,7 @@ public class HelpDesk {
         // Define values for the patient
         Patient opdPatient01 = new Patient("", "Harsha", 24, GenderTypes.Male, 1234567890, PatientAdmissionType.Opd, Departments.Cardiology);
         Patient opdPatient02 = new Patient("", "Vini", 24, GenderTypes.Male, 1234567800, PatientAdmissionType.Opd, Departments.Neurology);
-        Patient opdPatient03 = new Patient("", "Chiru", 24, GenderTypes.Male, 1234567000, PatientAdmissionType.Opd, Departments.Orthopedics);
+        Patient opdPatient03 = new Patient("", "Chiru", 24, GenderTypes.Male, 1234567000, PatientAdmissionType.Opd, Departments.Cardiology);
         Patient nonOpdPatient01 = new Patient("", "Jeegu", 24, GenderTypes.Male, 1234567890, PatientAdmissionType.Non_Opd, Departments.Neurology, 5, 5555, 123);
         Patient nonOpdPatient02 = new Patient("", "Prajju", 24, GenderTypes.Male, 1234567800, PatientAdmissionType.Non_Opd, Departments.Cardiology, 2, 2323, 1);
         
@@ -107,25 +107,11 @@ public class HelpDesk {
                     cleanUpFuncNonOpd(patientIs);
                 }
             break;
-            case Orthopedics:
-                if (patientIs.getAdmissionType() == PatientAdmissionType.Opd){
-                    cleanUpFuncOpd(patientIs);
-                }else{
-                    cleanUpFuncNonOpd(patientIs);
-                }
-            break;
-            case Pediatrics:
-                if (patientIs.getAdmissionType() == PatientAdmissionType.Opd){
-                    cleanUpFuncOpd(patientIs);
-                }else{
-                    cleanUpFuncNonOpd(patientIs);
-                }
-            break;
         }
     }
 
     private void cleanUpFuncOpd(Patient patient){
-        System.out.println(":- Sent patient to respective OPD department which is CARDIOLOGY and also sent the patient file.");
+        System.out.println(":- Checking For doctor avilability in "+ patient.getDepartmentToVisit() + " Department");
         Patient patientObj =  new CardiologyDep().startPatientCheckup(patient);
         System.out.println(":- Started the payment process.");
         completeThePaymentProcess(patient.getDepartmentToVisit(), patientObj);
