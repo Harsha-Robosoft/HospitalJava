@@ -71,11 +71,4 @@ public class Patient {
         this.policyNnumber = policyNum;
         this.clamAmmount = clamAmount;
     }
-
-    public void patientCameToHospital(){
-        System.out.println("");
-        System.out.println(":- Patient Came to hospital.");
-        new Hospital().contactHelpDeskForPatientRegistration();
-    }
-
 }
