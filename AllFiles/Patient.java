@@ -2,7 +2,6 @@ package AllFiles;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import AllFiles.AllEnums.*;
 
 
@@ -19,9 +18,6 @@ public class Patient {
     private int policyNnumber;
     private int clamAmmount;
     private HashMap<Departments, ArrayList<PatientCheckUpDetails>> checkUpDetails = new HashMap<>();
-
-
-
     
     public HashMap<Departments, ArrayList<PatientCheckUpDetails>> getCheckUpDetails() {
         return checkUpDetails;
@@ -29,7 +25,6 @@ public class Patient {
     public void setCheckUpDetails(HashMap<Departments, ArrayList<PatientCheckUpDetails>> checkUpDetails) {
         this.checkUpDetails = checkUpDetails;
     }
-
 
     public String getPatientID() {return patientID; }
     public String getFullName() {return fullName;}
@@ -41,8 +36,6 @@ public class Patient {
     public int getNumberOfdayToStay() {return numberOfdayToStay;}
     public int getPolicyNnumber() {return policyNnumber;}
     public int getClamAmmount() {return clamAmmount;}
-
-    
 
     public void setPatientID(String patientID) {
         this.patientID = patientID;
